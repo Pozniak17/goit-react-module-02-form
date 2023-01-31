@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import shortid from 'shortid';
 
 class Form extends Component {
@@ -12,24 +12,23 @@ class Form extends Component {
   nameInputId = shortid.generate();
   tagInputId = shortid.generate();
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
+  handleChange = event => {
+    const { name, value } = event.currentTarget;
 
     this.setState({ [name]: value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
 
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state); //передаємо в пропс Form onSubmit цілий state
 
     this.reset();
   };
 
-  handleLicenceChange = e => {
-    console.log(e.currentTarget.checked);
-
-    this.setState({ licence: e.currentTarget.checked });
+  handleLicenceChange = event => {
+    console.log(event.currentTarget.checked);
+    this.setState({ licence: event.currentTarget.checked });
   };
 
   reset = () => {
@@ -60,8 +59,7 @@ class Form extends Component {
             id={this.tagInputId}
           />
         </label>
-
-        <p>Ваш уровень:</p>
+        <p>Ваш уровень</p>
         <label>
           <input
             type="radio"
@@ -72,7 +70,6 @@ class Form extends Component {
           />
           Junior
         </label>
-
         <label>
           <input
             type="radio"
@@ -90,10 +87,9 @@ class Form extends Component {
             value="senior"
             onChange={this.handleChange}
             checked={this.state.experience === 'senior'}
-          />
+          />{' '}
           Senior
         </label>
-
         <br />
 
         <label>
@@ -105,7 +101,6 @@ class Form extends Component {
           />
           Согласен с условием
         </label>
-
         <button type="submit" disabled={!this.state.licence}>
           Отправить
         </button>
@@ -115,3 +110,5 @@ class Form extends Component {
 }
 
 export default Form;
+
+// 51 хвилина

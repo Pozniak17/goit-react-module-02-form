@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './TodoEditor.scss';
 
 class TodoEditor extends Component {
@@ -6,12 +6,12 @@ class TodoEditor extends Component {
     message: '',
   };
 
-  handleChange = e => {
-    this.setState({ message: e.currentTarget.value });
+  handleChange = event => {
+    this.setState({ message: event.currentTarget.value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
 
     this.props.onSubmit(this.state.message);
 
@@ -26,6 +26,7 @@ class TodoEditor extends Component {
           value={this.state.message}
           onChange={this.handleChange}
         ></textarea>
+
         <button type="submit" className="TodoEditor__button">
           Сохранить
         </button>

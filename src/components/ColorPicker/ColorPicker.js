@@ -12,9 +12,20 @@ class ColorPicker extends Component {
   };
 
   makeOptionClassName = index => {
-    return classNames('ColorPicker__option', {
+    // const optionClasses = ['ColorPicker__option'];
+
+    //todo викликаємо, в середину передаємо класи як аргументи, які повині буде за замовчуванням, а в об'єкт лиш те, що повинно виконуватися за умовою, або передаємо в className на 44 рядку. Пакет classname для складання динамічних класів в компонентах. Зверху ті що за замовчуванням(дефолтні), а в об'єкт ті що залежать від умови.
+    return classNames('ColorPicker__option', 'q', 'a', {
       'ColorPicker__option--active': index === this.state.activeOptionIdx,
     });
+
+    // console.log(clsx);
+
+    // if (index === this.state.activeOptionIdx) {
+    //   optionClasses.push('ColorPicker__option--active');
+    // }
+
+    // return optionClasses.join(' ');
   };
 
   render() {

@@ -1,18 +1,28 @@
+import Container from 'components/Container';
 import React, { Component } from 'react';
-import shortid from 'shortid';
-// import ColorPicker from './components/ColorPicker';
 // import Counter from './components/Counter';
-import Container from './components/Container';
+// import Dropdown from './components/Dropdown';
+// import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
-import TodoEditor from './components/TodoEditor';
-import Filter from './components/Filter';
-// import Form from './components/Form';
+// import Form from 'components/Form';
 import initialTodos from './todos.json';
+
+import shortid from 'shortid';
+
+import TodoEditor from 'components/TodoEditor';
+
+// const colorPickerOptions = [
+//   { label: 'red', color: '#F44336' },
+//   { label: 'green', color: '#4CAF50' },
+//   { label: 'blue', color: '#2196F3' },
+//   { label: 'grey', color: '#607D8B' },
+//   { label: 'pink', color: '#E91E63' },
+//   { label: 'indigo', color: '#3F51B5' },
+// ];
 
 class App extends Component {
   state = {
     todos: initialTodos,
-    filter: '',
   };
 
   addTodo = text => {
@@ -33,70 +43,62 @@ class App extends Component {
     }));
   };
 
+  // todo варіант 1.
   toggleCompleted = todoId => {
+    console.log(todoId);
+
     // this.setState(prevState => ({
     //   todos: prevState.todos.map(todo => {
     //     if (todo.id === todoId) {
+    //       console.log('Нашли тот туду который нужно!');
     //       return {
     //         ...todo,
     //         completed: !todo.completed,
     //       };
     //     }
-
     //     return todo;
     //   }),
     // }));
 
+    // todo варіант 2. Через тернарний оператор
     this.setState(({ todos }) => ({
       todos: todos.map(todo =>
-        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
       ),
     }));
   };
 
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
-  };
-
-  getVisibleTodos = () => {
-    const { filter, todos } = this.state;
-    const normalizedFilter = filter.toLowerCase();
-
-    return todos.filter(todo =>
-      todo.text.toLowerCase().includes(normalizedFilter),
-    );
-  };
-
-  calculateCompletedTodos = () => {
-    const { todos } = this.state;
-
-    return todos.reduce(
-      (total, todo) => (todo.completed ? total + 1 : total),
-      0,
-    );
+  formSubmitHandler = data => {
+    console.log(data);
   };
 
   render() {
-    const { todos, filter } = this.state;
+    const { todos } = this.state;
+
+    // TODO: рефакторинг вычисляемых данных в методы
     const totalTodoCount = todos.length;
-    const completedTodoCount = this.calculateCompletedTodos();
-    const visibleTodos = this.getVisibleTodos();
+    const completedTodoCount = todos.reduce(
+      (total, todo) => (todo.completed ? total + 1 : total),
+      0
+    );
 
     return (
       <Container>
-        {/* TODO: вынести в отдельный компонент */}
-
         <div>
           <p>Всего заметок: {totalTodoCount}</p>
           <p>Выполнено: {completedTodoCount}</p>
         </div>
-
         <TodoEditor onSubmit={this.addTodo} />
+        {/* <Form onSubmit={this.formSubmitHandler} /> */}
 
-        <Filter value={filter} onChange={this.changeFilter} />
+        {/* <ColorPicker options={colorPickerOptions} /> */}
+        {/* <Form onSubmit={this.formSubmitHandler} /> */}
+        {/* <Counter initialValue={10} /> */}
+
+        {/* TODO: Вынести в отдельный компонент */}
 
         <TodoList
-          todos={visibleTodos}
+          todos={todos}
           onDeleteTodo={this.deleteTodo}
           onToggleCompleted={this.toggleCompleted}
         />
@@ -107,11 +109,4 @@ class App extends Component {
 
 export default App;
 
-// const colorPickerOptions = [
-//   { label: 'red', color: '#F44336' },
-//   { label: 'green', color: '#4CAF50' },
-//   { label: 'blue', color: '#2196F3' },
-//   { label: 'grey', color: '#607D8B' },
-//   { label: 'pink', color: '#E91E63' },
-//   { label: 'indigo', color: '#3F51B5' },
-// ];
+//  1.19.00
